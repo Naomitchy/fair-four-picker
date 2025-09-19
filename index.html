@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Fair Four Picker</title>
-  <meta name="description" content="フェアプレイな試合を支援するチームメンバー自動割り当てアプリ" />
+  <meta name="description" content="フェアプレイを支援するチームメンバー自動割り当てアプリ" />
   <style>
     :root{
       --green-1:#0a8f3a;
@@ -44,6 +44,7 @@
       width:100%; border:1px solid #dfe7e2; background:#fff; color:var(--ink);
       border-radius:10px; padding:12px 12px; font-size:16px; outline:none; box-shadow: inset 0 1px 0 rgba(0,0,0,0.03);
     }
+    input[type="radio"]{ width:18px; height:18px; }
     .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end }
     .actions{ display:flex; gap:10px; flex-wrap:wrap }
     button{ appearance:none; border:0; border-radius:12px; padding:12px 16px; font-weight:700; font-size:16px; background:var(--accent); color:#fff; box-shadow: var(--shadow); cursor:pointer; }
@@ -54,7 +55,6 @@
     .member-row .name{ flex:1 1 auto; min-width:0 }
     .flags{ display:flex; gap:10px; }
     .flag-pill{ display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; border:1px solid #dfe7e2; background:#f7fbf8; font-size:13px; user-select:none; }
-    .flag-pill input{ width:18px; height:18px; }
     .hint{ font-size:12px; color:var(--muted); margin-top:4px }
     .grid{ display:grid; gap:10px; grid-template-columns: repeat( auto-fill, minmax(260px, 1fr) ); }
     .match{ border-left:5px solid var(--accent); }
@@ -77,7 +77,7 @@
       <div class="logo" aria-hidden="true">⚽️</div>
       <div>
         <h1>Fair Four Picker</h1>
-        <div class="sub">フェアプレイな試合を支援するチームメンバー自動割り当てアプリ</div>
+        <div class="sub">フェアプレイを支援するチームメンバー自動割り当てアプリ</div>
       </div>
     </header>
 
@@ -90,62 +90,62 @@
               <div class="member-row">
                 <input id="name-1" class="name" type="text" placeholder="メンバー1（例：こうたろう）" />
                 <div class="flags">
-                  <label class="flag-pill"><input id="gk-1" type="checkbox" class="flag-gk" />GK</label>
-                  <label class="flag-pill"><input id="fp-1" type="checkbox" class="flag-fp" />FP</label>
+                  <label class="flag-pill"><input id="gk-1" type="radio" name="role-1" value="GK" />GK</label>
+                  <label class="flag-pill"><input id="fp-1" type="radio" name="role-1" value="FP" />FP</label>
                 </div>
               </div>
               <div class="member-row">
                 <input id="name-2" class="name" type="text" placeholder="メンバー2（例：けんすけ）" />
                 <div class="flags">
-                  <label class="flag-pill"><input id="gk-2" type="checkbox" class="flag-gk" />GK</label>
-                  <label class="flag-pill"><input id="fp-2" type="checkbox" class="flag-fp" />FP</label>
+                  <label class="flag-pill"><input id="gk-2" type="radio" name="role-2" value="GK" />GK</label>
+                  <label class="flag-pill"><input id="fp-2" type="radio" name="role-2" value="FP" />FP</label>
                 </div>
               </div>
               <div class="member-row">
                 <input id="name-3" class="name" type="text" placeholder="メンバー3（例：りゅうき）" />
                 <div class="flags">
-                  <label class="flag-pill"><input id="gk-3" type="checkbox" class="flag-gk" />GK</label>
-                  <label class="flag-pill"><input id="fp-3" type="checkbox" class="flag-fp" />FP</label>
+                  <label class="flag-pill"><input id="gk-3" type="radio" name="role-3" value="GK" />GK</label>
+                  <label class="flag-pill"><input id="fp-3" type="radio" name="role-3" value="FP" />FP</label>
                 </div>
               </div>
               <div class="member-row">
                 <input id="name-4" class="name" type="text" placeholder="メンバー4（例：りゅうま）" />
                 <div class="flags">
-                  <label class="flag-pill"><input id="gk-4" type="checkbox" class="flag-gk" />GK</label>
-                  <label class="flag-pill"><input id="fp-4" type="checkbox" class="flag-fp" />FP</label>
+                  <label class="flag-pill"><input id="gk-4" type="radio" name="role-4" value="GK" />GK</label>
+                  <label class="flag-pill"><input id="fp-4" type="radio" name="role-4" value="FP" />FP</label>
                 </div>
               </div>
               <div class="member-row">
                 <input id="name-5" class="name" type="text" placeholder="メンバー5（任意）" />
                 <div class="flags">
-                  <label class="flag-pill"><input id="gk-5" type="checkbox" class="flag-gk" />GK</label>
-                  <label class="flag-pill"><input id="fp-5" type="checkbox" class="flag-fp" />FP</label>
+                  <label class="flag-pill"><input id="gk-5" type="radio" name="role-5" value="GK" />GK</label>
+                  <label class="flag-pill"><input id="fp-5" type="radio" name="role-5" value="FP" />FP</label>
                 </div>
               </div>
               <div class="member-row">
                 <input id="name-6" class="name" type="text" placeholder="メンバー6（任意）" />
                 <div class="flags">
-                  <label class="flag-pill"><input id="gk-6" type="checkbox" class="flag-gk" />GK</label>
-                  <label class="flag-pill"><input id="fp-6" type="checkbox" class="flag-fp" />FP</label>
+                  <label class="flag-pill"><input id="gk-6" type="radio" name="role-6" value="GK" />GK</label>
+                  <label class="flag-pill"><input id="fp-6" type="radio" name="role-6" value="FP" />FP</label>
                 </div>
               </div>
               <div class="member-row">
                 <input id="name-7" class="name" type="text" placeholder="メンバー7（任意）" />
                 <div class="flags">
-                  <label class="flag-pill"><input id="gk-7" type="checkbox" class="flag-gk" />GK</label>
-                  <label class="flag-pill"><input id="fp-7" type="checkbox" class="flag-fp" />FP</label>
+                  <label class="flag-pill"><input id="gk-7" type="radio" name="role-7" value="GK" />GK</label>
+                  <label class="flag-pill"><input id="fp-7" type="radio" name="role-7" value="FP" />FP</label>
                 </div>
               </div>
               <div class="member-row">
                 <input id="name-8" class="name" type="text" placeholder="メンバー8（任意）" />
                 <div class="flags">
-                  <label class="flag-pill"><input id="gk-8" type="checkbox" class="flag-gk" />GK</label>
-                  <label class="flag-pill"><input id="fp-8" type="checkbox" class="flag-fp" />FP</label>
+                  <label class="flag-pill"><input id="gk-8" type="radio" name="role-8" value="GK" />GK</label>
+                  <label class="flag-pill"><input id="fp-8" type="radio" name="role-8" value="FP" />FP</label>
                 </div>
               </div>
             </div>
             <div class="hint">
-              第1試合の手動割当（任意）：各メンバー行のGK/FPフラグで指定できます。空欄や重複は無視します。
+              第1試合の手動割当（任意）：各メンバー行の「GK / FP」をラジオボタンで選べます（どちらも未選択でもOK／複数GKが選ばれた場合は先頭のみ採用）。
             </div>
           </div>
 
@@ -197,9 +197,9 @@
       <div class="footer-card">
         ルール要点:
         <ul>
-          <li>各試合 4人：フィールドプレーヤー3名＋キーパー1名。</li>
-          <li>前の試合でGKだった人は、次の試合はFPを強く優先。</li>
-          <li>出られなかった人は、次の試合はFPを強く優先。</li>
+          <li>各試合 4人：フィールドプレーヤー3名＋ゴールキーパー1名。</li>
+          <li>前の試合で出られなかった人は、次の試合はFPを最も優先。</li>
+          <li>前の試合でGKだった人は、次の試合はFPを優先。</li>
           <li>出来るだけ公平になるように、出場数とGK回数が均されるよう自動調整。</li>
           <li>制約が同時に多すぎる場合（例：FP優先が4人以上）は、やむを得ず一部の希望を満たせないことがあります。その際はアプリが明示します。</li>
         </ul>
@@ -212,7 +212,6 @@
   </div>
 
   <script>
-    // 小さなユーティリティ
     const $ = sel => document.querySelector(sel);
 
     function seedFromString(str){
@@ -248,8 +247,8 @@
       const list = [];
       for(let i=1;i<=8;i++){
         const name = ($('#name-'+i)?.value || '').trim();
-        const gk = !!document.getElementById('gk-'+i)?.checked;
-        const fp = !!document.getElementById('fp-'+i)?.checked;
+        const gk = !!document.getElementById('gk-'+i)?.checked; // radio
+        const fp = !!document.getElementById('fp-'+i)?.checked; // radio
         list.push({ idx:i, name, gk, fp });
       }
       return list;
@@ -269,7 +268,7 @@
       return names;
     }
 
-    // 第1試合 事前割当（フラグ）読み取り・検証
+    // 第1試合 事前割当（ラジオ）読み取り・検証
     function readFirstMatchPreset(names){
       const mem = getMembers();
       const warnings = [];
@@ -291,7 +290,6 @@
           continue;
         }
         seen.add(m.name);
-        // 名前がリストに含まれているか（念のための整合）
         if(names.includes(m.name)){
           uniqRows.push(m);
         }
@@ -314,7 +312,7 @@
         warnings.push(`第1試合FPフラグが4人以上に付いていたため、先頭の3人のみ採用しました（${fps.join('、')}）`);
       }
 
-      // GKとFPの重複があればFPから外す
+      // GKとFPの重複があればFPから外す（UI上は起きない想定だが保険）
       if(gk && fps.includes(gk)){
         fps = fps.filter(n => n !== gk);
         warnings.push(`"${gk}" はGKに指定されているため、FPから外しました`);
@@ -334,69 +332,182 @@
 
       let seedInt = seedFromString(seedStr);
       if(seedInt == null){
-            const buf = new Uint32Array(1);
-      crypto.getRandomValues(buf);
-      seedInt = buf[0] >>> 0;
-    }
-    const rng = mulberry32(seedInt);
+        const buf = new Uint32Array(1);
+        crypto.getRandomValues(buf);
+        seedInt = buf[0] >>> 0;
+      }
+      const rng = mulberry32(seedInt);
 
-    // プレイヤー状態
-    const players = names.map((n, idx) => ({
-      id: idx,
-      name: n,
-      matchesPlayed: 0,
-      gkCount: 0,
-      lastStatus: null, // 'FP' | 'GK' | 'BENCH'
-      lastGKMatch: -9999
-    }));
+      // プレイヤー状態
+      const players = names.map((n, idx) => ({
+        id: idx,
+        name: n,
+        matchesPlayed: 0,
+        gkCount: 0,
+        lastStatus: null, // 'FP' | 'GK' | 'BENCH'
+        lastGKMatch: -9999
+      }));
 
-    const schedule = [];
-    const warnings = [];
+      const schedule = [];
+      const warnings = [];
 
-    const pickOrderRandom = (arr) => shuffleInPlace(arr.slice(), rng);
+      const pickOrderRandom = (arr) => shuffleInPlace(arr.slice(), rng);
 
-    for(let m = 1; m <= matchCount; m++){
-      // 第1試合：事前指定があれば優先適用（不足は自動補完）
-      if(m === 1 && firstMatchPreset && (firstMatchPreset.gk || (firstMatchPreset.fps && firstMatchPreset.fps.length))){
-        let fps = [];
-        let gk = null;
+      for(let m = 1; m <= matchCount; m++){
+        // 第1試合：事前指定があれば優先適用（不足は自動補完）
+        if(m === 1 && firstMatchPreset && (firstMatchPreset.gk || (firstMatchPreset.fps && firstMatchPreset.fps.length))){
+          let fps = [];
+          let gk = null;
 
-        if(firstMatchPreset.gk){
-          gk = players.find(p => p.name === firstMatchPreset.gk) || null;
+          if(firstMatchPreset.gk){
+            gk = players.find(p => p.name === firstMatchPreset.gk) || null;
+          }
+
+          if(firstMatchPreset.fps && firstMatchPreset.fps.length){
+            const used = new Set();
+            for(const nm of firstMatchPreset.fps){
+              const p = players.find(x => x.name === nm);
+              if(p && (!gk || p !== gk) && !used.has(p.name) && fps.length < 3){
+                fps.push(p);
+                used.add(p.name);
+              }
+            }
+          }
+
+          // GK未指定なら残りから
+          if(!gk){
+            let gkCandidates = players.filter(p => !fps.includes(p));
+            gkCandidates = pickOrderRandom(gkCandidates);
+            gk = gkCandidates[0];
+          }
+          // FP不足分補充
+          const remainForFP = players.filter(p => p !== gk && !fps.includes(p));
+          const remainSorted = pickOrderRandom(remainForFP);
+          while(fps.length < 3 && remainSorted.length > 0){
+            fps.push(remainSorted.shift());
+          }
+
+          const activeSet = new Set([gk, ...fps]);
+          const matchViolations = []; // 第1試合は優先違反の概念なし
+
+          schedule.push({
+            match: m,
+            gk: gk.name,
+            fps: fps.map(p => p.name),
+            bench: players.filter(p => !activeSet.has(p)).map(p => p.name),
+            violations: matchViolations
+          });
+
+          // 状態更新
+          for(const p of players){
+            if(p === gk){
+              p.matchesPlayed += 1;
+              p.gkCount += 1;
+              p.lastStatus = 'GK';
+              p.lastGKMatch = m;
+            }else if(fps.includes(p)){
+              p.matchesPlayed += 1;
+              p.lastStatus = 'FP';
+            }else{
+              p.lastStatus = 'BENCH';
+            }
+          }
+          continue; // 次の試合へ
         }
 
-        if(firstMatchPreset.fps && firstMatchPreset.fps.length){
-          const used = new Set();
-          for(const nm of firstMatchPreset.fps){
-            const p = players.find(x => x.name === nm);
-            if(p && (!gk || p !== gk) && !used.has(p.name) && fps.length < 3){
-              fps.push(p);
-              used.add(p.name);
-            }
+        // 通常ロジック：前試合BENCHと前試合GKをFP優先（BENCHをより強く）
+        const mustFP = players.filter(p => p.lastStatus === 'GK' || p.lastStatus === 'BENCH');
+
+        const mustFPSorted = pickOrderRandom(mustFP).sort((a,b)=>{
+          const ap = (a.lastStatus === 'BENCH') ? 0 : 1;
+          const bp = (b.lastStatus === 'BENCH') ? 0 : 1;
+          if(ap !== bp) return ap - bp;
+          if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
+          return 0;
+        });
+
+        const fps = [];
+        const leftoverMust = [];
+        for(const p of mustFPSorted){
+          if(fps.length < 3){
+            fps.push(p);
+          }else{
+            leftoverMust.push(p);
           }
         }
 
-        // GK未指定なら残りから
-        if(!gk){
-          let gkCandidates = players.filter(p => !fps.includes(p));
-          gkCandidates = pickOrderRandom(gkCandidates);
-          gk = gkCandidates[0];
+        // GKは原則「前試合FP」から
+        let gkCandidates = players.filter(p => p.lastStatus !== 'GK' && p.lastStatus !== 'BENCH');
+
+        let forcedGKFromMust = false;
+        if(gkCandidates.length === 0){
+          gkCandidates = players.slice(); // 全員から
+          forcedGKFromMust = true;
         }
-        // FP不足分補充
+
+        gkCandidates = pickOrderRandom(gkCandidates).sort((a,b)=>{
+          if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount;
+          if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
+          return 0;
+        });
+
+        // FPに既に選んだ人は避ける
+        let gk = gkCandidates.find(p => !fps.includes(p));
+        if(!gk){
+          // どうしても見つからない → FPから1人をGKへスライド
+          // 優先度: 前試合FP(最優先で回す) < 前試合GK < 前試合BENCH(最も回したくない)
+          const prio = (x) => (x.lastStatus === 'FP') ? 0 : (x.lastStatus === 'GK') ? 1 : 2;
+          const fpSortedForGK = fps.slice().sort((a,b)=>{
+            const da = prio(a), db = prio(b);
+            if(da !== db) return da - db;
+            if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount;
+            if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
+            return 0;
+          });
+          gk = fpSortedForGK[0];
+          const idx = fps.indexOf(gk);
+          if(idx >= 0) fps.splice(idx,1);
+          forcedGKFromMust = true;
+        }
+
+        // FP不足分を補充
         const remainForFP = players.filter(p => p !== gk && !fps.includes(p));
-        const remainSorted = pickOrderRandom(remainForFP);
+        const remainSorted = pickOrderRandom(remainForFP).sort((a,b)=>{
+          if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
+          return 0;
+        });
         while(fps.length < 3 && remainSorted.length > 0){
           fps.push(remainSorted.shift());
         }
 
         const activeSet = new Set([gk, ...fps]);
-        const matchViolations = []; // 第1試合は優先違反の概念なし
 
+        // 優先違反チェック（ベンチ優先をより強く）
+        const matchViolations = [];
+        for(const p of players){
+          const isBenchPrev = (p.lastStatus === 'BENCH');
+          const isGKPrev = (p.lastStatus === 'GK');
+          if(isBenchPrev && !activeSet.has(p)){
+            matchViolations.push(`${p.name}: 前試合ベンチ→今回${(p===gk)?'GK':'ベンチ'}（本来FP優先）`);
+          }else if(isGKPrev && !activeSet.has(p)){
+            matchViolations.push(`${p.name}: 前試合GK→今回${(p===gk)?'GK':'ベンチ'}（本来FP優先）`);
+          }
+        }
+        if(forcedGKFromMust && (gk.lastStatus === 'GK' || gk.lastStatus === 'BENCH')){
+          const note = `${gk.name}: FP優先だったがGKに割当て`;
+          if(!matchViolations.includes(note)) matchViolations.push(note);
+        }
+        if(matchViolations.length){
+          warnings.push(`第${m}試合: 制約が多く一部の希望を満たせませんでした → ${matchViolations.join('、')}`);
+        }
+
+        // 結果保存
         schedule.push({
           match: m,
           gk: gk.name,
           fps: fps.map(p => p.name),
-          bench: players.filter(p => !activeSet.has(p)).map(p => p.name),
+          bench:
+		          players.filter(p => !activeSet.has(p)).map(p => p.name),
           violations: matchViolations
         });
 
@@ -414,342 +525,234 @@
             p.lastStatus = 'BENCH';
           }
         }
-        continue; // 次の試合へ
       }
 
-      // 通常ロジック：前試合BENCHと前試合GKをFP優先（BENCHをより強く）
-      const mustFP = players.filter(p => p.lastStatus === 'GK' || p.lastStatus === 'BENCH');
-
-      const mustFPSorted = pickOrderRandom(mustFP).sort((a,b)=>{
-        // ベンチ明けをより強く優先
-        const ap = (a.lastStatus === 'BENCH') ? 0 : 1;
-        const bp = (b.lastStatus === 'BENCH') ? 0 : 1;
-        if(ap !== bp) return ap - bp;
-        if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
-        return 0;
-      });
-
-      const fps = [];
-      const leftoverMust = [];
-      for(const p of mustFPSorted){
-        if(fps.length < 3){
-          fps.push(p);
-        }else{
-          leftoverMust.push(p);
-        }
-      }
-
-      // GKは原則「前試合FP」から
-      let gkCandidates = players.filter(p => p.lastStatus !== 'GK' && p.lastStatus !== 'BENCH');
-
-      let forcedGKFromMust = false;
-      if(gkCandidates.length === 0){
-        gkCandidates = players.slice(); // 全員から
-        forcedGKFromMust = true;
-      }
-
-      gkCandidates = pickOrderRandom(gkCandidates).sort((a,b)=>{
-        if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount;
-        if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
-        return 0;
-      });
-
-      // FPに既に選んだ人は避ける
-      let gk = gkCandidates.find(p => !fps.includes(p));
-      if(!gk){
-        // どうしても見つからない → FPから1人をGKへスライド
-        // 優先度: 前試合FP(最優先で回す) < 前試合GK < 前試合BENCH(最も回したくない)
-        const prio = (x) => (x.lastStatus === 'FP') ? 0 : (x.lastStatus === 'GK') ? 1 : 2;
-        const fpSortedForGK = fps.slice().sort((a,b)=>{
-          const da = prio(a), db = prio(b);
-          if(da !== db) return da - db;
-          if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount;
-          if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
-          return 0;
-        });
-        gk = fpSortedForGK[0];
-        const idx = fps.indexOf(gk);
-        if(idx >= 0) fps.splice(idx,1);
-        forcedGKFromMust = true;
-      }
-
-      // FP不足分を補充
-      const remainForFP = players.filter(p => p !== gk && !fps.includes(p));
-      const remainSorted = pickOrderRandom(remainForFP).sort((a,b)=>{
-        if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
-        return 0;
-      });
-      while(fps.length < 3 && remainSorted.length > 0){
-        fps.push(remainSorted.shift());
-      }
-
-      const activeSet = new Set([gk, ...fps]);
-
-      // 優先違反チェック（ベンチ優先をより強く）
-      const matchViolations = [];
-      for(const p of players){
-        const isBenchPrev = (p.lastStatus === 'BENCH');
-        const isGKPrev = (p.lastStatus === 'GK');
-        if(isBenchPrev && !activeSet.has(p)){
-          matchViolations.push(`${p.name}: 前試合ベンチ→今回${(p===gk)?'GK':'ベンチ'}（本来FP優先）`);
-        }else if(isGKPrev && !activeSet.has(p)){
-          matchViolations.push(`${p.name}: 前試合GK→今回${(p===gk)?'GK':'ベンチ'}（本来FP優先）`);
-        }
-      }
-      if(forcedGKFromMust && (gk.lastStatus === 'GK' || gk.lastStatus === 'BENCH')){
-        const note = `${gk.name}: FP優先だったがGKに割当て`;
-        if(!matchViolations.includes(note)) matchViolations.push(note);
-      }
-      if(matchViolations.length){
-        warnings.push(`第${m}試合: 制約が多く一部の希望を満たせませんでした → ${matchViolations.join('、')}`);
-      }
-
-      // 結果保存
-      schedule.push({
-        match: m,
-        gk: gk.name,
-        fps: fps.map(p => p.name),
-        bench: players.filter(p => !activeSet.has(p)).map(p => p.name),
-        violations: matchViolations
-      });
-
-      // 状態更新
-      for(const p of players){
-        if(p === gk){
-          p.matchesPlayed += 1;
-          p.gkCount += 1;
-          p.lastStatus = 'GK';
-          p.lastGKMatch = m;
-        }else if(fps.includes(p)){
-          p.matchesPlayed += 1;
-          p.lastStatus = 'FP';
-        }else{
-          p.lastStatus = 'BENCH';
-        }
-      }
+      // 返却
+      return {
+        seed: seedInt,
+        schedule,
+        warnings,
+        players: players.map(p => ({
+          name: p.name,
+          matchesPlayed: p.matchesPlayed,
+          gkCount: p.gkCount,
+          fpCount: p.matchesPlayed - p.gkCount
+        }))
+      };
     }
 
-    // 返却
-    return {
-      seed: seedInt,
-      schedule,
-      warnings,
-      players: players.map(p => ({
-        name: p.name,
-        matchesPlayed: p.matchesPlayed,
-        gkCount: p.gkCount,
-        fpCount: p.matchesPlayed - p.gkCount
-      }))
-    };
-  }
+    // レンダリング系
+    function renderResult(data){
+      const result = document.getElementById('result');
+      const matchesEl = document.getElementById('matches');
+      const summaryEl = document.getElementById('summary');
+      const warningsEl = document.getElementById('warnings');
+      const seedInfo = document.getElementById('seedInfo');
 
-  // レンダリング系
-  function renderResult(data){
-    const result = $('#result');
-    const matchesEl = $('#matches');
-    const summaryEl = $('#summary');
-    const warningsEl = $('#warnings');
-    const seedInfo = $('#seedInfo');
+      result.style.display = 'block';
+      matchesEl.innerHTML = '';
+      summaryEl.innerHTML = '';
+      warningsEl.style.display = 'none';
+      warningsEl.textContent = '';
 
-    result.style.display = 'block';
-    matchesEl.innerHTML = '';
-    summaryEl.innerHTML = '';
-    warningsEl.style.display = 'none';
-    warningsEl.textContent = '';
-
-    // シード情報
-    const seedStr = $('#seed').value.trim();
-    if(seedStr){
-      seedInfo.textContent = `再現シード: "${seedStr}" → ${data.seed}`;
-    }else{
-      seedInfo.textContent = `シード自動: ${data.seed}`;
-    }
-
-    // 警告まとめ
-    if(data.warnings && data.warnings.length){
-      warningsEl.style.display = 'block';
-      warningsEl.textContent = data.warnings.join(' / ');
-    }
-
-    // 各試合
-    for(const item of data.schedule){
-      const card = document.createElement('div');
-      card.className = 'card match';
-      const fpLine = item.fps.map(n => `<span class="tag">${escapeHTML(n)}</span>`).join(' ');
-      const benchLine = item.bench.map(n => `<span class="tag" style="background:#fff2f2; color:#8b1a1a">${escapeHTML(n)}</span>`).join(' ');
-      const vio = (item.violations && item.violations.length)
-        ? `<div class="small warn">注意: ${item.violations.map(escapeHTML).join(' / ')}</div>`
-        : '';
-      card.innerHTML = `
-        <h3>第${item.match}試合</h3>
-        <div class="line"><span class="role">GK</span> <span class="tag">${escapeHTML(item.gk)}</span></div>
-        <div class="line"><span class="role">FP</span> ${fpLine}</div>
-        <div class="line muted small">ベンチ: ${benchLine || '—'}</div>
-        ${vio}
-      `;
-      matchesEl.appendChild(card);
-    }
-
-    // サマリー
-    const playersSorted = data.players.slice().sort((a,b)=>{
-      if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
-      if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount;
-      return a.name.localeCompare(b.name, 'ja');
-    });
-    const lines = playersSorted.map(p => {
-      const benchCount = (data.schedule.length - p.matchesPlayed);
-      return `<div class="p">・${escapeHTML(p.name)}：出場 ${p.matchesPlayed}（FP ${p.fpCount} / GK ${p.gkCount}）／ベンチ ${benchCount}</div>`;
-    }).join('');
-    summaryEl.innerHTML = lines;
-  }
-
-  function buildTextOutput(data){
-    const seedStr = $('#seed').value.trim();
-    const lines = [];
-    lines.push('フェア分けサッカー（4人制：FP3・GK1）');
-    lines.push(seedStr ? `シード: "${seedStr}" → ${data.seed}` : `シード自動: ${data.seed}`);
-    lines.push('');
-
-    for(const item of data.schedule){
-      lines.push(`第${item.match}試合`);
-      lines.push(`  GK: ${item.gk}`);
-      lines.push(`  FP: ${item.fps.join(', ')}`);
-      lines.push(`  ベンチ: ${item.bench.join(', ') || '—'}`);
-      if(item.violations && item.violations.length){
-        lines.push(`  注意: ${item.violations.join(' / ')}`);
-      }
-      lines.push('');
-    }
-
-    lines.push('出場サマリー');
-    const playersSorted = data.players.slice().sort((a,b)=>{
-      if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
-      if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount;
-      return a.name.localeCompare(b.name, 'ja');
-    });
-    for(const p of playersSorted){
-      const benchCount = data.schedule.length - p.matchesPlayed;
-      lines.push(`  ${p.name}: 出場 ${p.matchesPlayed}（FP ${p.fpCount} / GK ${p.gkCount}）／ベンチ ${benchCount}`);
-    }
-
-    return lines.join('\n');
-  }
-
-  // クリップボードコピー（フォールバック付き）
-  async function copyToClipboard(text){
-    try{
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        await navigator.clipboard.writeText(text);
-        alert('結果をクリップボードにコピーしました。');
+      // シード情報
+      const seedStr = document.getElementById('seed').value.trim();
+      if(seedStr){
+        seedInfo.textContent = `再現シード: "${seedStr}" → ${data.seed}`;
       }else{
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.setAttribute('readonly','');
-        ta.style.position = 'fixed';
-        ta.style.top = '-1000px';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        alert('結果をクリップボードにコピーしました。');
+        seedInfo.textContent = `シード自動: ${data.seed}`;
       }
-    }catch(e){
-      alert('コピーに失敗しました。手動でコピーしてください。');
+
+      // 警告まとめ
+      if(data.warnings && data.warnings.length){
+        warningsEl.style.display = 'block';
+        warningsEl.textContent = data.warnings.join(' / ');
+      }
+
+      // 各試合
+      for(const item of data.schedule){
+        const card = document.createElement('div');
+        card.className = 'card match';
+        const fpLine = item.fps.map(n => `<span class="tag">${escapeHTML(n)}</span>`).join(' ');
+        const benchLine = item.bench.map(n => `<span class="tag" style="background:#fff2f2; color:#8b1a1a">${escapeHTML(n)}</span>`).join(' ');
+        const vio = (item.violations && item.violations.length)
+          ? `<div class="small warn">注意: ${item.violations.map(escapeHTML).join(' / ')}</div>`
+          : '';
+        card.innerHTML = `
+          <h3>第${item.match}試合</h3>
+          <div class="line"><span class="role">GK</span> <span class="tag">${escapeHTML(item.gk)}</span></div>
+          <div class="line"><span class="role">FP</span> ${fpLine}</div>
+          <div class="line muted small">ベンチ: ${benchLine || '—'}</div>
+          ${vio}
+        `;
+        matchesEl.appendChild(card);
+      }
+
+      // サマリー
+      const playersSorted = data.players.slice().sort((a,b)=>{
+        if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
+        if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount;
+        return a.name.localeCompare(b.name, 'ja');
+      });
+      const lines = playersSorted.map(p => {
+        const benchCount = (data.schedule.length - p.matchesPlayed);
+        return `<div class="p">・${escapeHTML(p.name)}：出場 ${p.matchesPlayed}（FP ${p.fpCount} / GK ${p.gkCount}）／ベンチ ${benchCount}</div>`;
+      }).join('');
+      summaryEl.innerHTML = lines;
     }
-  }
 
-  // イベント登録
-  document.getElementById('fillSample').addEventListener('click', ()=>{
-    // ご指定の4名を投入
-    const samples = ['こうたろう','けんすけ','りゅうき','りゅうま'];
-    for(let i=1;i<=8;i++){
-      document.getElementById('name-'+i).value = samples[i-1] || '';
-      document.getElementById('gk-'+i).checked = false;
-      document.getElementById('fp-'+i).checked = false;
+    function buildTextOutput(data){
+      const seedStr = document.getElementById('seed').value.trim();
+      const lines = [];
+      lines.push('フェア分けサッカー（4人制：FP3・GK1）');
+      lines.push(seedStr ? `シード: "${seedStr}" → ${data.seed}` : `シード自動: ${data.seed}`);
+      lines.push('');
+
+      for(const item of data.schedule){
+        lines.push(`第${item.match}試合`);
+        lines.push(`  GK: ${item.gk}`);
+        lines.push(`  FP: ${item.fps.join(', ')}`);
+        lines.push(`  ベンチ: ${item.bench.join(', ') || '—'}`);
+        if(item.violations && item.violations.length){
+          lines.push(`  注意: ${item.violations.join(' / ')}`);
+        }
+        lines.push('');
+      }
+
+      lines.push('出場サマリー');
+      const playersSorted = data.players.slice().sort((a,b)=>{
+        if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
+        if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount;
+        return a.name.localeCompare(b.name, 'ja');
+      });
+      for(const p of playersSorted){
+        const benchCount = data.schedule.length - p.matchesPlayed;
+        lines.push(`  ${p.name}: 出場 ${p.matchesPlayed}（FP ${p.fpCount} / GK ${p.gkCount}）／ベンチ ${benchCount}`);
+      }
+
+      return lines.join('\n');
     }
-    document.getElementById('matchCount').value = 5;
-    document.getElementById('seed').value = '';
-    document.getElementById('result').style.display = 'none';
-    document.getElementById('error').style.display = 'none';
-  });
 
-  document.getElementById('clearAll').addEventListener('click', ()=>{
-    for(let i=1;i<=8;i++){
-      document.getElementById('name-'+i).value = '';
-      document.getElementById('gk-'+i).checked = false;
-      document.getElementById('fp-'+i).checked = false;
+    // クリップボードコピー（フォールバック付き）
+    async function copyToClipboard(text){
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          await navigator.clipboard.writeText(text);
+          alert('結果をクリップボードにコピーしました。');
+        }else{
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly','');
+          ta.style.position = 'fixed';
+          ta.style.top = '-1000px';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          alert('結果をクリップボードにコピーしました。');
+        }
+      }catch(e){
+        alert('コピーに失敗しました。手動でコピーしてください。');
+      }
     }
-    document.getElementById('matchCount').value = 5;
-    document.getElementById('seed').value = '';
-    document.getElementById('result').style.display = 'none';
-    document.getElementById('error').style.display = 'none';
-  });
 
-  document.getElementById('gen').addEventListener('click', ()=>{
-    const names = getUniqueNames();
-    const matchCount = parseInt(document.getElementById('matchCount').value, 10);
-    const seedStr = document.getElementById('seed').value.trim();
-    const err = document.getElementById('error');
+    // イベント登録
+    document.getElementById('fillSample').addEventListener('click', ()=>{
+      // ご指定の4名を投入
+      const samples = ['こうたろう','けんすけ','りゅうき','りゅうま'];
+      for(let i=1;i<=8;i++){
+        document.getElementById('name-'+i).value = samples[i-1] || '';
+        // ラジオはクリア（どちらも未選択）
+        const gk = document.getElementById('gk-'+i);
+        const fp = document.getElementById('fp-'+i);
+        if(gk) gk.checked = false;
+        if(fp) fp.checked = false;
+      }
+      document.getElementById('matchCount').value = 5;
+      document.getElementById('seed').value = '';
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('error').style.display = 'none';
+    });
 
-    err.style.display = 'none';
-    err.textContent = '';
+    document.getElementById('clearAll').addEventListener('click', ()=>{
+      for(let i=1;i<=8;i++){
+        document.getElementById('name-'+i).value = '';
+        const gk = document.getElementById('gk-'+i);
+        const fp = document.getElementById('fp-'+i);
+        if(gk) gk.checked = false;
+        if(fp) fp.checked = false;
+      }
+      document.getElementById('matchCount').value = 5;
+      document.getElementById('seed').value = '';
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('error').style.display = 'none';
+    });
 
-    try{
+    document.getElementById('gen').addEventListener('click', ()=>{
+      const names = getUniqueNames();
+      const matchCount = parseInt(document.getElementById('matchCount').value, 10);
+      const seedStr = document.getElementById('seed').value.trim();
+      const err = document.getElementById('error');
+
+      err.style.display = 'none';
+      err.textContent = '';
+
+      try{
+        const presetInfo = readFirstMatchPreset(names);
+        const data = generateSchedule(names, matchCount, seedStr, presetInfo.preset);
+        if(presetInfo.warnings.length){
+          data.warnings.unshift(...presetInfo.warnings);
+        }
+        renderResult(data);
+      }catch(e){
+        err.style.display = 'block';
+        err.textContent = e.message || '入力エラー';
+        document.getElementById('result').style.display = 'none';
+      }
+    });
+
+    document.getElementById('copyText').addEventListener('click', ()=>{
+      const matchesEl = document.getElementById('matches');
+      if(!matchesEl || matchesEl.children.length === 0){
+        alert('先にスケジュールを作成してください。');
+        return;
+      }
+      const data = collectCurrentData();
+      const text = buildTextOutput(data);
+      copyToClipboard(text);
+    });
+
+    document.getElementById('shareBtn').addEventListener('click', async ()=>{
+      const matchesEl = document.getElementById('matches');
+      if(!matchesEl || matchesEl.children.length === 0){
+        alert('先にスケジュールを作成してください。');
+        return;
+      }
+      const data = collectCurrentData();
+      const text = buildTextOutput(data);
+      if(navigator.share){
+        try{
+          await navigator.share({ text });
+        }catch(e){
+          // キャンセル等は無視
+        }
+      }else{
+        copyToClipboard(text);
+      }
+    });
+
+    // 現在の入力から再生成（コピー/共有用）
+    function collectCurrentData(){
+      const names = getUniqueNames();
+      const matchCount = parseInt(document.getElementById('matchCount').value, 10);
+      const seedStr = document.getElementById('seed').value.trim();
       const presetInfo = readFirstMatchPreset(names);
       const data = generateSchedule(names, matchCount, seedStr, presetInfo.preset);
       if(presetInfo.warnings.length){
         data.warnings.unshift(...presetInfo.warnings);
       }
-      renderResult(data);
-    }catch(e){
-      err.style.display = 'block';
-      err.textContent = e.message || '入力エラー';
-      document.getElementById('result').style.display = 'none';
+      return data;
     }
-  });
-
-  document.getElementById('copyText').addEventListener('click', ()=>{
-    const matchesEl = document.getElementById('matches');
-    if(!matchesEl || matchesEl.children.length === 0){
-      alert('先にスケジュールを作成してください。');
-      return;
-    }
-    const data = collectCurrentData();
-    const text = buildTextOutput(data);
-    copyToClipboard(text);
-  });
-
-  document.getElementById('shareBtn').addEventListener('click', async ()=>{
-    const matchesEl = document.getElementById('matches');
-    if(!matchesEl || matchesEl.children.length === 0){
-      alert('先にスケジュールを作成してください。');
-      return;
-    }
-    const data = collectCurrentData();
-    const text = buildTextOutput(data);
-    if(navigator.share){
-      try{
-        await navigator.share({ text });
-      }catch(e){
-        // キャンセル等は無視
-      }
-    }else{
-      copyToClipboard(text);
-    }
-  });
-
-  // 現在の入力から再生成（コピー/共有用）
-  function collectCurrentData(){
-    const names = getUniqueNames();
-    const matchCount = parseInt(document.getElementById('matchCount').value, 10);
-    const seedStr = document.getElementById('seed').value.trim();
-    const presetInfo = readFirstMatchPreset(names);
-    const data = generateSchedule(names, matchCount, seedStr, presetInfo.preset);
-    if(presetInfo.warnings.length){
-      data.warnings.unshift(...presetInfo.warnings);
-    }
-    return data;
-  }
   </script>
 </body>
 </html>
