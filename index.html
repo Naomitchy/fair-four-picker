@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Fair Four Picker</title>
+  <meta name="description" content="子供たちの練習試合で、参加メンバーと役割（フィールド・キーパー）を出来るだけ公平に自動割当てするスマホ向けWEBアプリ" />
+  <style>
+    :root{
+      --green-1:#0a8f3a;
+      --green-2:#0f6e2f;
+      --line:#cfe9d5;
+      --card:#ffffff;
+      --ink:#0b1b14;
+      --muted:#5b6b61;
+      --accent:#1ea65f;
+      --danger:#d7263d;
+      --shadow: 0 6px 20px rgba(0,0,0,0.18);
+      --radius:14px;
+    }
+    html,body{
+      margin:0;
+      padding:0;
+      background: radial-gradient(1200px 800px at 50% -10%, #14a055 0%, var(--green-1) 35%, var(--green-2) 100%);
+      color:var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .wrap{
+      max-width:960px;
+      margin: 0 auto;
+      padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    }
+    header{
+      display:flex; align-items:center; gap:10px; margin: 6px 4px 14px;
+      color:#fff;
+    }
+    .logo{
+      width:44px; height:44px; min-width:44px; border-radius:50%;
+      display:grid; place-items:center; font-size:24px; background:rgba(255,255,255,0.14); box-shadow: var(--shadow);
+      border:1px solid rgba(255,255,255,0.25)
+    }
+    h1{ font-size:20px; line-height:1.2; margin:0}
+    .sub{ font-size:12px; opacity:.9 }
+    .pitch{
+      position:relative; border-radius:18px; border:2px solid rgba(255,255,255,0.25);
+      overflow:hidden; margin: 0 4px 16px;
+      background:
+        linear-gradient(0deg, rgba(255,255,255,0.06), rgba(255,255,255,0.06)) 0 0 / 100% 2px no-repeat,
+        linear-gradient(0deg, rgba(255,255,255,0.06), rgba(255,255,255,0.06)) 0 100% / 100% 2px no-repeat,
+        linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.06)) 0 0 / 2px 100% no-repeat,
+        linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.06)) 100% 0 / 2px 100% no-repeat,
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0 2px, transparent 3px) 50% 50%/ 100% 100% no-repeat,
+        linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.2)) 50% 0/2px 100% no-repeat;
+      padding: 14px;
+    }
+    .card{
+      background:var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 14px; margin: 10px 4px;
+    }
+    .controls{ display:grid; gap:12px }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end }
+    label{ font-size:13px; color:var(--ink); display:block; margin-bottom:6px }
+    input[type="text"], textarea, input[type="number"]{
+      width:100%; border:1px solid #dfe7e2; background:#fff; color:var(--ink);
+      border-radius:10px; padding:12px 12px; font-size:16px; outline:none;
+      box-shadow: inset 0 1px 0 rgba(0,0,0,0.03);
+    }
+    textarea{ min-height:92px; resize:vertical; }
+    .hint{ font-size:12px; color:var(--muted) }
+    .actions{ display:flex; gap:10px; flex-wrap:wrap }
+    button{
+      appearance:none; border:0; border-radius:12px; padding:12px 16px; font-weight:700; font-size:16px;
+      background:var(--accent); color:#fff; box-shadow: var(--shadow); cursor:pointer;
+    }
+    button.secondary{ background:#f1f5f3; color:#0d3b28 }
+    button.ghost{ background:transparent; border:1px solid rgba(255,255,255,0.6); color:#fff }
+    .grid{
+      display:grid; gap:10px;
+      grid-template-columns: repeat( auto-fill, minmax(260px, 1fr) );
+    }
+    .match{
+      border-left:5px solid var(--accent);
+    }
+    .match h3{
+      margin:0 0 8px; font-size:16px; color:#0d3b28
+    }
+    .line{ display:flex; gap:8px; margin:6px 0; flex-wrap:wrap }
+    .tag{
+      background:#eef7f1; color:#0b3e2a; padding:6px 10px; border-radius:999px; font-size:14px; font-weight:600
+    }
+    .role{ font-weight:700; color:#0b3e2a; margin-right:6px }
+    .muted{ color:var(--muted) }
+    .warn{ color:var(--danger); font-size:13px; }
+    footer{
+      color:#e6fff2; font-size:12px; margin: 22px 8px 0; line-height:1.6
+    }
+    .footer-card{
+      background: rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.25);
+      border-radius:12px; padding:10px 12px; margin-top:10px
+    }
+    .sticky-foot{
+      position:sticky; bottom:12px; display:flex; gap:8px; justify-content:flex-end; padding: 0 6px;
+    }
+    .copy{
+      background:#0b3e2a; color:#d7ffea
+    }
+    .stats{ font-size:14px; color:#0d3b28 }
+    .stats .p{ margin:4px 0 }
+    .small{ font-size:12px }
+    .sr{ position:absolute; left:-10000px; right:auto; top:auto; width:1px; height:1px; overflow:hidden; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo" aria-hidden="true">⚽️</div>
+      <div>
+        <h1>Fair Four Picker</h1>
+        <div class="sub">子供たちが楽しくサッカーに集中するための自動割当てアプリ</div>
+      </div>
+    </header>
+
+    <div class="pitch">
+      <div class="card">
+        <div class="controls">
+          <div>
+            <label for="names">参加メンバー（4〜8人）</label>
+            <textarea id="names" placeholder="例）ゆうた, そうた, はると, りく, こうた, みさき, あおい
+カンマ or 改行で区切って入力してください"></textarea>
+            <div class="hint">同じ名前は自動で重複削除。名前の順は初期優先に反映されます。</div>
+          </div>
+
+          <div class="row">
+            <div style="flex:1 1 180px; min-width:160px">
+              <label for="matchCount">試合数（1〜10）</label>
+              <input id="matchCount" type="number" min="1" max="10" value="3" inputmode="numeric" />
+            </div>
+            <div style="flex:1 1 220px; min-width:200px">
+              <label for="seed">乱数シード（任意・同じ結果を再現したい時）</label>
+              <input id="seed" type="text" placeholder="例）20240901 など。未入力なら毎回ランダム" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="actions">
+              <button id="gen">スケジュール作成</button>
+              <button id="fillSample" class="secondary">サンプル入力</button>
+              <button id="clearAll" class="secondary">入力クリア</button>
+            </div>
+          </div>
+          <div id="error" class="warn" role="alert" style="display:none"></div>
+        </div>
+      </div>
+
+      <div id="result" class="card" style="display:none">
+        <div class="row" style="justify-content:space-between; align-items:center">
+          <h2 style="margin:0; font-size:18px; color:#0d3b28">割当て結果</h2>
+          <div class="small muted" id="seedInfo"></div>
+        </div>
+
+        <div id="warnings" class="warn" style="display:none; margin: 6px 0 10px"></div>
+
+        <div id="matches" class="grid" aria-live="polite" aria-busy="false"></div>
+
+        <div class="card" style="margin-top:14px; background:#f7fbf8">
+          <div style="font-weight:700; margin-bottom:6px">出場サマリー</div>
+          <div id="summary" class="stats"></div>
+        </div>
+
+        <div class="sticky-foot">
+          <button id="copyText" class="copy">結果をテキストでコピー</button>
+          <button id="shareBtn" class="ghost">共有</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div>Created by Naomitchy</div>
+      <div class="footer-card">
+        このアプリは CC0（著作権放棄・No Rights Reserved）相当で提供します。出典不要・改変・再配布も自由にご利用ください。
+      </div>
+      <div class="footer-card" style="margin-top:10px">
+        ルール要点:
+        <ul>
+          <li>各試合 4人：フィールドプレーヤー3名＋キーパー1名。</li>
+          <li>出られなかった人は、次の試合はFPを強く優先。</li>
+          <li>前の試合でGKだった人は、次の試合はFPを強く優先。</li>
+          <li>出来るだけ公平になるように、出場数とGK回数が均されるよう自動調整。</li>
+          <li>制約が同時に多すぎる場合（例：FP優先が4人以上）は、やむを得ず一部の希望を満たせないことがあります。その際はアプリが明示します。</li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // 小さなユーティリティ
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+    // 文字列シード -> 32bit 整数
+    function seedFromString(str){
+      if(!str) return null;
+      let h = 2166136261 >>> 0;
+      for(let i=0; i<str.length; i++){
+        h ^= str.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return h >>> 0;
+    }
+    // mulberry32 乱数
+    function mulberry32(a) {
+      return function() {
+        let t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      }
+    }
+    // 配列シャッフル（シード乱数）
+    function shuffleInPlace(arr, rng){
+      for(let i = arr.length -1; i>0; i--){
+        const j = Math.floor(rng()* (i+1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function parseNames(raw){
+      if(!raw) return [];
+      const parts = raw.split(/[\n,、]+/).map(s=>s.trim()).filter(Boolean);
+      const seen = new Set();
+      const list = [];
+      for(const p of parts){
+        const key = p; // 区別はそのまま
+        if(!seen.has(key)){
+          seen.add(key);
+          list.push(p);
+        }
+      }
+      return list;
+    }
+
+    // スケジューラ
+    function generateSchedule(names, matchCount, seedStr){
+      // 初期検証
+      if(names.length < 4 || names.length > 8){
+        throw new Error("参加メンバーは4〜8人で入力してください。");
+      }
+      if(matchCount < 1 || matchCount > 10){
+        throw new Error("試合数は1〜10で入力してください。");
+      }
+
+      // RNG 準備
+      let seedInt = seedFromString(seedStr);
+      if(seedInt == null){
+        const buf = new Uint32Array(1);
+        crypto.getRandomValues(buf);
+        seedInt = buf[0] >>> 0;
+      }
+      const rng = mulberry32(seedInt);
+
+      // プレイヤー状態
+      const players = names.map((n, idx) => ({
+        id: idx,
+        name: n,
+        matchesPlayed: 0,
+        gkCount: 0,
+        lastStatus: null, // 'FP' | 'GK' | 'BENCH'
+        lastGKMatch: -9999
+      }));
+
+      // 名前 -> プレイヤー
+      const byName = new Map(players.map(p => [p.name, p]));
+
+      // 結果格納
+      const schedule = [];
+      const warnings = [];
+
+      const pickOrderRandom = (arr) => {
+        // 同率の際の軽いシャッフル（安定性を損なわない程度）
+        return shuffleInPlace(arr.slice(), rng);
+      };
+
+      for(let m = 1; m <= matchCount; m++){
+    // 直前の試合状況に基づく「FP優先（必ずFP）」候補
+    const mustFP = players.filter(p => p.lastStatus === 'GK' || p.lastStatus === 'BENCH');
+
+    // FP優先を並べ替え（ベンチ優先 → 出場試合が少ない → ランダム）
+    const mustFPSorted = pickOrderRandom(mustFP).sort((a,b)=>{
+      const ap = (a.lastStatus === 'BENCH') ? 0 : 1;
+      const bp = (b.lastStatus === 'BENCH') ? 0 : 1;
+      if(ap !== bp) return ap - bp;
+      if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
+      return 0;
+    });
+
+    // まずFP枠（3人）に、FP優先をできるだけ入れる
+    const fps = [];
+    const leftoverMust = [];
+    for(const p of mustFPSorted){
+      if(fps.length < 3){
+        fps.push(p);
+      }else{
+        leftoverMust.push(p); // FP優先だが今回はFPに入れられなかった候補
+      }
+    }
+
+    // GK候補は「FP優先ではない人」から選びたい（= 直前がFPまたは初回）
+    let gkCandidates = players.filter(p => p.lastStatus !== 'GK' && p.lastStatus !== 'BENCH');
+
+    // もし全員がFP優先でGK候補がいない場合、やむなくFP優先からも選ぶ（制約違反扱い）
+    let forcedGKFromMust = false;
+    if(gkCandidates.length === 0){
+      gkCandidates = players.slice(); // 全員から選ぶ
+      forcedGKFromMust = true;
+    }
+
+    // GKの公平性：GK回数が少ない → 出場回数が少ない → ランダム
+    gkCandidates = pickOrderRandom(gkCandidates).sort((a,b)=>{
+      if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount;
+      if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
+      return 0;
+    });
+
+// 既にFPに入れている人はGKにしたくないので除外（ただし全員がFP優先で候補が極端に少ない場合はこの限りではない）
+let gk = gkCandidates.find(p => !fps.includes(p));
+if(!gk){
+// どうしても見つからない場合は、FPから一人をGKにスライド
+// 優先度: 前試合FP(最優先でGKに回す) < 前試合GK < 前試合BENCH(最も回したくない)
+const prio = (x) => (x.lastStatus === 'FP') ? 0 : (x.lastStatus === 'GK') ? 1 : 2;
+
+const fpSortedForGK = fps.slice().sort((a,b)=>{
+const da = prio(a), db = prio(b);
+if(da !== db) return da - db; // ベンチ明けをGKに回すのを最も避ける
+if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount; // GK回数が少ない人を優先して均す
+if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed; // 出場数が少ない人を優先
+return 0;
+});
+
+gk = fpSortedForGK[0];
+// GKにスライドした人をFP配列から外す
+const idx = fps.indexOf(gk);
+if(idx >= 0) fps.splice(idx,1);
+forcedGKFromMust = true; // FP優先からGKを出してしまった（制約違反として扱う）
+}
+
+    // FPが3人に満たなければ、他の人から補充（出場数が少ない → ランダム）
+    const remainForFP = players.filter(p => p !== gk && !fps.includes(p));
+    const remainSorted = pickOrderRandom(remainForFP).sort((a,b)=>{
+      if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
+      return 0;
+    });
+    while(fps.length < 3 && remainSorted.length > 0){
+      fps.push(remainSorted.shift());
+    }
+
+    // アクティブ（出場）セット
+    const activeSet = new Set([gk, ...fps]);
+
+    // 制約違反チェック（FP優先だったのにFPで出られなかった人）
+    const matchViolations = [];
+    // 1) FP優先なのにベンチになった
+    for(const p of players){
+      const isMust = (p.lastStatus === 'GK' || p.lastStatus === 'BENCH');
+      if(isMust && !activeSet.has(p)){
+        matchViolations.push(`${p.name}: FP優先だったが選出できず（ベンチ）`);
+      }
+    }
+    // 2) FP優先なのにGKになってしまった
+    if(forcedGKFromMust && (gk.lastStatus === 'GK' || gk.lastStatus === 'BENCH')){
+      matchViolations.push(`${gk.name}: FP優先だったがGKに割当て`);
+    }
+
+    if(matchViolations.length){
+      warnings.push(`第${m}試合: 制約が多く一部の希望を満たせませんでした → ${matchViolations.join('、')}`);
+    }
+
+    // 結果保存
+    schedule.push({
+      match: m,
+      gk: gk.name,
+      fps: fps.map(p => p.name),
+      bench: players.filter(p => !activeSet.has(p)).map(p => p.name),
+      violations: matchViolations
+    });
+
+    // 状態更新
+    for(const p of players){
+      if(p === gk){
+        p.matchesPlayed += 1;
+        p.gkCount += 1;
+        p.lastStatus = 'GK';
+        p.lastGKMatch = m;
+      }else if(fps.includes(p)){
+        p.matchesPlayed += 1;
+        p.lastStatus = 'FP';
+      }else{
+        p.lastStatus = 'BENCH';
+      }
+    }
+  }
+
+  // 返却（プレイヤーの集計情報も添える）
+  return {
+    seed: seedInt,
+    schedule,
+    warnings,
+    players: players.map(p => ({
+      name: p.name,
+      matchesPlayed: p.matchesPlayed,
+      gkCount: p.gkCount,
+      fpCount: p.matchesPlayed - p.gkCount
+    }))
+  };
+}
+
+// レンダリング系
+function renderResult(data){
+  const result = $('#result');
+  const matchesEl = $('#matches');
+  const summaryEl = $('#summary');
+  const warningsEl = $('#warnings');
+  const seedInfo = $('#seedInfo');
+
+  result.style.display = 'block';
+  matchesEl.innerHTML = '';
+  summaryEl.innerHTML = '';
+  warningsEl.style.display = 'none';
+  warningsEl.textContent = '';
+
+  // シード情報
+  const seedStr = $('#seed').value.trim();
+  if(seedStr){
+    seedInfo.textContent = `再現シード: "${seedStr}" → ${data.seed}`;
+  }else{
+    seedInfo.textContent = `シード自動: ${data.seed}`;
+  }
+
+  // 警告まとめ
+  if(data.warnings && data.warnings.length){
+    warningsEl.style.display = 'block';
+    warningsEl.textContent = data.warnings.join(' / ');
+  }
+
+  // 各試合
+  for(const item of data.schedule){
+    const card = document.createElement('div');
+    card.className = 'card match';
+    const fpLine = item.fps.map(n => `<span class="tag">${escapeHTML(n)}</span>`).join(' ');
+    const benchLine = item.bench.map(n => `<span class="tag" style="background:#fff2f2; color:#8b1a1a">${escapeHTML(n)}</span>`).join(' ');
+    const vio = (item.violations && item.violations.length)
+      ? `<div class="small warn">注意: ${item.violations.map(escapeHTML).join(' / ')}</div>`
+      : '';
+    card.innerHTML = `
+      <h3>第${item.match}試合</h3>
+      <div class="line"><span class="role">GK</span> <span class="tag">${escapeHTML(item.gk)}</span></div>
+      <div class="line"><span class="role">FP</span> ${fpLine}</div>
+      <div class="line muted small">ベンチ: ${benchLine || '—'}</div>
+      ${vio}
+    `;
+    matchesEl.appendChild(card);
+  }
+
+  // サマリー（名前順）
+  const playersSorted = data.players.slice().sort((a,b)=>{
+    // 出場の少ない人を上に
+    if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
+    // GK回数の少ない人を上に
+    if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount;
+    return a.name.localeCompare(b.name, 'ja');
+  });
+  const lines = playersSorted.map(p => {
+    const benchCount = (data.schedule.length - p.matchesPlayed);
+    return `<div class="p">・${escapeHTML(p.name)}：出場 ${p.matchesPlayed}（FP ${p.fpCount} / GK ${p.gkCount}）／ベンチ ${benchCount}</div>`;
+  }).join('');
+  summaryEl.innerHTML = lines;
+}
+
+function escapeHTML(str){
+  return String(str).replace(/[&<>"']/g, s => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[s]));
+}
+
+// テキスト出力
+function buildTextOutput(data){
+  const seedStr = $('#seed').value.trim();
+  const lines = [];
+  lines.push('フェア分けサッカー（4人制：FP3・GK1）');
+  lines.push(seedStr ? `シード: "${seedStr}" → ${data.seed}` : `シード自動: ${data.seed}`);
+  lines.push('');
+
+  for(const item of data.schedule){
+    lines.push(`第${item.match}試合`);
+    lines.push(`  GK: ${item.gk}`);
+    lines.push(`  FP: ${item.fps.join(', ')}`);
+    lines.push(`  ベンチ: ${item.bench.join(', ') || '—'}`);
+    if(item.violations && item.violations.length){
+      lines.push(`  注意: ${item.violations.join(' / ')}`);
+    }
+    lines.push('');
+  }
+
+  lines.push('出場サマリー');
+  const playersSorted = data.players.slice().sort((a,b)=>{
+    if(a.matchesPlayed !== b.matchesPlayed) return a.matchesPlayed - b.matchesPlayed;
+    if(a.gkCount !== b.gkCount) return a.gkCount - b.gkCount;
+    return a.name.localeCompare(b.name, 'ja');
+  });
+  for(const p of playersSorted){
+    const benchCount = data.schedule.length - p.matchesPlayed;
+    lines.push(`  ${p.name}: 出場 ${p.matchesPlayed}（FP ${p.fpCount} / GK ${p.gkCount}）／ベンチ ${benchCount}`);
+  }
+
+  return lines.join('\n');
+}
+
+// クリップボードコピー（フォールバック付き）
+async function copyToClipboard(text){
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      await navigator.clipboard.writeText(text);
+      alert('結果をクリップボードにコピーしました。');
+    }else{
+      // フォールバック
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly','');
+      ta.style.position = 'fixed';
+      ta.style.top = '-1000px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      alert('結果をクリップボードにコピーしました。');
+    }
+  }catch(e){
+    alert('コピーに失敗しました。手動でコピーしてください。');
+  }
+}
+
+// イベント登録
+$('#fillSample').addEventListener('click', ()=>{
+  $('#names').value = 'ゆうた, そうた, はると, りく, こうた, みさき, あおい, けんと';
+  $('#matchCount').value = 5;
+  $('#seed').value = '';
+  $('#result').style.display = 'none';
+  $('#error').style.display = 'none';
+});
+
+$('#clearAll').addEventListener('click', ()=>{
+  $('#names').value = '';
+  $('#matchCount').value = 5;
+  $('#seed').value = '';
+  $('#result').style.display = 'none';
+  $('#error').style.display = 'none';
+});
+
+$('#gen').addEventListener('click', ()=>{
+  const raw = $('#names').value;
+  const names = parseNames(raw);
+  const matchCount = parseInt($('#matchCount').value, 10);
+  const seedStr = $('#seed').value.trim();
+  const err = $('#error');
+
+  err.style.display = 'none';
+  err.textContent = '';
+
+  try{
+    const data = generateSchedule(names, matchCount, seedStr);
+    renderResult(data);
+  }catch(e){
+    err.style.display = 'block';
+    err.textContent = e.message || '入力エラー';
+    $('#result').style.display = 'none';
+  }
+});
+
+$('#copyText').addEventListener('click', ()=>{
+  const matchesEl = $('#matches');
+  if(matchesEl.children.length === 0){
+    alert('先にスケジュールを作成してください。');
+    return;
+  }
+  const data = collectCurrentData();
+  const text = buildTextOutput(data);
+  copyToClipboard(text);
+});
+
+$('#shareBtn').addEventListener('click', async ()=>{
+  const matchesEl = $('#matches');
+  if(matchesEl.children.length === 0){
+    alert('先にスケジュールを作成してください。');
+    return;
+  }
+  const data = collectCurrentData();
+  const text = buildTextOutput(data);
+  if(navigator.share){
+    try{
+      await navigator.share({ text });
+    }catch(e){
+      // キャンセル等は無視
+    }
+  }else{
+    copyToClipboard(text);
+  }
+});
+
+// 画面から現在の結果を再構築（コピー/共有用）
+function collectCurrentData(){
+  // 再生成して整合性を保つ（UIから逆算するより安全）
+  const names = parseNames($('#names').value);
+  const matchCount = parseInt($('#matchCount').value, 10);
+  const seedStr = $('#seed').value.trim();
+  return generateSchedule(names, matchCount, seedStr);
+}
+</script> </body> </html>
